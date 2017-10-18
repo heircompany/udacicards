@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Platform, StatusBar } from 'react-native';
+import { Platform, StatusBar, Text, View } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
 
@@ -10,7 +10,11 @@ import AddCard from './screens/AddCard';
 import Score from './screens/Score';
 import StartQuiz from './screens/StartQuiz';
 
-import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Entypo,
+  FontAwesome,
+  MaterialCommunityIcons
+} from '@expo/vector-icons';
 import { Constants } from 'expo';
 import { red, white } from './styles/colors';
 import { setLocalNotification } from './utils/helpers';

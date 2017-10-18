@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import DeckItem from '../components/DeckItem';
 import { receiveDecks, selectDeck } from '../actions';
+import DeckItem from '../components/DeckItem';
 import { getDecks } from '../utils/helpers';
 
 class DeckList extends Component {
@@ -28,11 +28,12 @@ class DeckList extends Component {
 
   render() {
     const { decks } = this.props;
+    const { container, centered } = styles;
 
     return (
-      <View style={styles.container}>
+      <View style={container}>
         {decks === null ? (
-          <View style={styles.centered}>
+          <View style={centered}>
             <Text style={{ fontSize: 50 }}>No Decks Available</Text>
           </View>
         ) : (
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  center: {
+  centered: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

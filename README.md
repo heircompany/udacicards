@@ -1,3 +1,13 @@
+## Installation Instructions
+*This project works with both NPM and Yarn package managers.*
+*Tested on Android, NOT iOS*
+- Install the Expo app on your device, or run npm eject and follow the instructions here: https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md
+- From the command line in the root directory, run npm install or yarn install
+- run npm start or yarn start
+
+## About This Application
+UdaciCards is a React Native application built with create-react-native-app and redux. Users can create decks of flash cards consisting of custom questions and answers, and then quiz themselves on that deck to see how high they can score during their studies.
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).

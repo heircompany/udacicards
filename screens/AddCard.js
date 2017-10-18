@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
   StyleSheet,
+  Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { addCard } from '../actions';
 import { connect } from 'react-redux';
+
+import { addCard } from '../actions';
 import { addCardToDeck } from '../utils/helpers';
 
 class AddCard extends Component {
@@ -32,7 +33,7 @@ class AddCard extends Component {
         navigation.state.params.update();
         navigation.goBack();
       })
-      .catch(() => console.log('error add card to deck'));
+      .catch(() => console.log('Error adding card to deck'));
   };
 
   render() {
@@ -42,23 +43,15 @@ class AddCard extends Component {
       <View style={container}>
         <View style={[{ flexDirection: 'row' }, input]}>
           <TextInput
-            style={{
-              borderBottomColor: 'gray',
-              borderBottomWidth: 1,
-              flex: 1
-            }}
-            placeholder="Question?"
+            style={{ flex: 1, fontSize: 20 }}
+            placeholder="Question"
             onChangeText={question => this.setState({ question })}
             value={this.state.question}
           />
         </View>
         <View style={[{ flexDirection: 'row' }, input]}>
           <TextInput
-            style={{
-              borderBottomColor: 'gray',
-              borderBottomWidth: 1,
-              flex: 1
-            }}
+            style={{ flex: 1, fontSize: 20 }}
             placeholder="Answer"
             onChangeText={answer => this.setState({ answer })}
             value={this.state.answer}
@@ -72,18 +65,13 @@ class AddCard extends Component {
   }
 }
 
-export default connect()(AddCard);
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center'
   },
   input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    height: 50,
+    height: 60,
     padding: 5,
     marginLeft: 10,
     marginRight: 10,
@@ -96,8 +84,10 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     backgroundColor: 'black',
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth: 1,
     width: 180
   }
 });
+
+export default connect()(AddCard);

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
+
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 class Score extends Component {
@@ -16,15 +17,18 @@ class Score extends Component {
   }
 
   backToDeck = () => {
-    this.props.navigation.dispatch(
+    const { state, dispatch } = this.props.navigation;
+
+    dispatch(
       NavigationActions.back({
-        key: this.props.navigation.state.params.key
+        key: state.params.key
       })
     );
   };
 
   restartQuiz = () => {
     const { title } = this.props.deck;
+
     this.props.navigation.dispatch(
       NavigationActions.reset({
         index: 2,
@@ -38,24 +42,26 @@ class Score extends Component {
   };
 
   render() {
+    const { button, container, score, title } = styles;
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Your score</Text>
-        <Text style={styles.score}>
-          {this.props.navigation.state.params.score}
-        </Text>
+      <View style={container}>
+        <Text style={title}>Your score</Text>
+        <Text style={score}>{this.props.navigation.state.params.score}</Text>
         <View style={{ flex: 1 }}>
           <TouchableOpacity
             onPress={this.restartQuiz}
-            style={[styles.btn, { borderColor: 'gray' }]}
+            style={[button, { borderColor: 'gray' }]}
           >
-            <Text style={{ textAlign: 'center' }}>Restart Quiz</Text>
+            <Text style={{ textAlign: 'center', fontSize: 20 }}>
+              Restart Quiz
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={this.backToDeck}
-            style={[styles.btn, { backgroundColor: 'black' }]}
+            style={[button, { backgroundColor: 'black' }]}
           >
-            <Text style={{ color: 'white', textAlign: 'center' }}>
+            <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>
               Back to Deck
             </Text>
           </TouchableOpacity>
@@ -81,26 +87,21 @@ const styles = StyleSheet.create({
     fontSize: 100,
     flex: 2
   },
-  btn: {
+  button: {
     marginBottom: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderWidth: 1,
     borderRadius: 5,
     width: 180
-  },
-  addBtn: {
-    borderColor: 'gray'
-  },
-  startBtn: {
-    backgroundColor: 'black'
   }
 });
 
 function mapStateToProps(state) {
   const { decks, selectedDeck } = state;
+
   return {
     deck: decks[selectedDeck]
   };

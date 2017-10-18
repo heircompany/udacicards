@@ -8,10 +8,10 @@ import {
   View
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Entypo } from '@expo/vector-icons';
 
 import { addDeck, selectDeck } from '../actions';
 import { saveDeckTitle } from '../utils/helpers';
-import { Entypo } from '@expo/vector-icons';
 
 class NewDeck extends Component {
   state = {
@@ -32,24 +32,26 @@ class NewDeck extends Component {
   };
 
   render() {
+    const { button, container, input } = styles;
+
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Text style={{ fontSize: 50, textAlign: 'center', marginBottom: 50 }}>
+      <KeyboardAvoidingView behavior="padding" style={container}>
+        <Text style={{ fontSize: 40, textAlign: 'center', marginBottom: 40 }}>
           Create New Deck
         </Text>
-        <View style={[{ flexDirection: 'row' }, styles.input]}>
+        <View style={[{ flexDirection: 'row' }, input]}>
           <TextInput
-            style={{ flex: 1 }}
+            style={{ flex: 1, fontSize: 20 }}
             placeholder="Deck Title"
             onChangeText={title => this.setState({ title })}
             value={this.state.title}
           />
         </View>
         <TouchableOpacity
-          style={[styles.button, { marginBottom: 10 }]}
+          style={[button, { marginBottom: 10 }]}
           onPress={this.addDeck}
         >
-          <Text style={{ color: 'white' }}>Submit</Text>
+          <Text style={{ color: 'white', fontSize: 20 }}>Submit</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -64,22 +66,19 @@ const styles = StyleSheet.create({
     padding: 10
   },
   input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    height: 50,
+    height: 60,
     padding: 5,
-    marginLeft: 10,
-    marginRight: 10
+    marginLeft: 50,
+    marginRight: 50
   },
   button: {
-    marginTop: 50,
+    marginTop: 40,
     paddingLeft: 30,
     paddingRight: 30,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
     backgroundColor: 'black',
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth: 1
   }
 });

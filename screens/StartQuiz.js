@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
-  TouchableOpacity,
+  Animated,
   StyleSheet,
-  Animated
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
+
 import { getDeck } from '../utils/helpers';
 
 class StartQuiz extends Component {
@@ -20,7 +21,8 @@ class StartQuiz extends Component {
     questionIndex: 0,
     score: 0,
     key: this.props.navigation.state.key,
-    questions: []
+    questions: [],
+    showAnswer: false
   };
 
   componentDidMount() {
@@ -36,9 +38,11 @@ class StartQuiz extends Component {
   flipCard = () => {
     Animated.spring(this.state.animatedValue, {
       toValue: 180,
-      friction: 8,
+      friction: 7,
       tension: 3
     }).start();
+
+    this.setState({ showAnswer: true });
   };
 
   correct = () => {
@@ -46,6 +50,7 @@ class StartQuiz extends Component {
     const currentIndex = this.state.questionIndex + 1;
     this.state.animatedValue.setValue(0);
     this.state.opacity.setValue(0);
+
     if (currentIndex === this.state.questions.length) {
       this.props.navigation.navigate('Score', { score, key: this.state.key });
       return;
@@ -53,7 +58,8 @@ class StartQuiz extends Component {
 
     this.setState({
       questionIndex: currentIndex,
-      score
+      score,
+      showAnswer: false
     });
   };
 
@@ -61,20 +67,35 @@ class StartQuiz extends Component {
     const currentIndex = this.state.questionIndex + 1;
     this.state.animatedValue.setValue(0);
     this.state.opacity.setValue(0);
+
     if (currentIndex === this.state.questions.length) {
       this.props.navigation.navigate('Score', {
         score: this.state.score,
-        key: this.state.key
+        key: this.state.key,
+        showAnswer: false
       });
+
       return;
     }
+
     this.setState({
       questionIndex: currentIndex
     });
   };
 
   render() {
-    const { questions, questionIndex, animatedValue } = this.state;
+    const { animatedValue, questions, questionIndex, showAnswer } = this.state;
+    const {
+      button,
+      container,
+      counter,
+      details,
+      flipCard,
+      flipCardBack,
+      subtitle,
+      text,
+      title
+    } = styles;
 
     const { question, answer } =
       questions.length > 0 ? questions[questionIndex] : {};
@@ -100,15 +121,15 @@ class StartQuiz extends Component {
     });
 
     return (
-      <View style={styles.container}>
-        <View style={styles.counter}>
+      <View style={container}>
+        <View style={counter}>
           <Text style={{ fontSize: 20 }}>{`${questionIndex +
             1}/${questions.length}`}</Text>
         </View>
-        <View style={styles.details}>
+        <View style={details}>
           <View
             style={[
-              styles.container,
+              container,
               { justifyContent: 'center', alignItems: 'center' }
             ]}
           >
@@ -116,17 +137,15 @@ class StartQuiz extends Component {
               <View>
                 <Animated.View
                   style={[
-                    styles.flipCard,
+                    flipCard,
                     {
                       transform: [{ rotateY: frontInterpolate }],
                       opacity: frontOpacity
                     }
                   ]}
                 >
-                  <Text style={styles.title}>
-                    {`${question ? question : ''}?`}
-                  </Text>
-                  <Text style={styles.subtitle}>Question</Text>
+                  <Text style={title}>{`${question ? question : ''}?`}</Text>
+                  <Text style={subtitle}>Question</Text>
                 </Animated.View>
               </View>
 
@@ -137,38 +156,40 @@ class StartQuiz extends Component {
                       transform: [{ rotateY: backInterpolate }],
                       opacity: backOpacity
                     },
-                    styles.flipCard,
-                    styles.flipCardBack
+                    flipCard,
+                    flipCardBack
                   ]}
                 >
-                  <Text style={styles.title}>{answer ? answer : ''}</Text>
-                  <Text style={styles.subtitle}>Answer</Text>
+                  <Text style={title}>{answer ? answer : ''}</Text>
+                  <Text style={subtitle}>Answer</Text>
                 </Animated.View>
               </View>
             </Animated.View>
           </View>
           <TouchableOpacity onPress={this.flipCard}>
-            <Text>Show Answer</Text>
+            <Text style={{ fontSize: 20, textAlign: 'center' }}>
+              {`${showAnswer ? '' : 'Show Answer'}`}
+            </Text>
           </TouchableOpacity>
         </View>
 
         <View
           style={[
-            styles.container,
+            container,
             { justifyContent: 'center', alignItems: 'center' }
           ]}
         >
           <TouchableOpacity
-            style={[styles.btn, { backgroundColor: 'green' }]}
+            style={[button, { backgroundColor: 'green' }]}
             onPress={this.correct}
           >
-            <Text style={styles.text}>Correct</Text>
+            <Text style={text}>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.btn, { backgroundColor: 'red' }]}
+            style={[button, { backgroundColor: 'red' }]}
             onPress={this.incorrect}
           >
-            <Text style={styles.text}>Incorrect</Text>
+            <Text style={text}>Incorrect</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -191,17 +212,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center'
   },
-  btn: {
+  button: {
     marginBottom: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    paddingLeft: 50,
-    paddingRight: 50,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderRadius: 5,
     width: 180
   },
   text: {
     color: 'white',
+    fontSize: 20,
     textAlign: 'center'
   },
   flipCard: {
@@ -214,7 +236,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 30,
     color: 'red',
     fontWeight: 'bold',
     marginTop: 10

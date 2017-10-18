@@ -3,45 +3,35 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 class DeckItem extends Component {
   render() {
+    const { questions, title } = this.props.deck;
+    const { container } = styles;
+
     return (
       <TouchableOpacity onPress={() => this.props.onPress()}>
         <View
           style={[
-            styles.container,
+            container,
             { borderBottomColor: 'gray', borderBottomWidth: 0.5 }
           ]}
         >
-          <Text style={{ fontSize: 20 }}>{this.props.deck.title}</Text>
-          <Text stlye={{ fontSize: 10 }}>
-            {this.props.deck.questions.length}
-          </Text>
+          <Text style={{ fontSize: 30 }}>{title}</Text>
+          <Text style={{ fontSize: 20 }}>{questions.length} Questions</Text>
         </View>
       </TouchableOpacity>
     );
   }
 }
 
-export default DeckItem;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // borderRadius: 16,
     padding: 40,
-    // marginLeft:10,
-    // marginRight:10,
-    marginTop: 17,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center'
-    // shadowRadius:3,
-    // shadowOpacity: 0.8,
-    // shadowColor: 'black',
-    // shadowOffset:{
-    //     width:0,
-    //     height:3
-    // }
   },
   title: {
     fontSize: 20
   }
 });
+
+export default DeckItem;

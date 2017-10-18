@@ -10,8 +10,9 @@ import {
   View
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getDeck } from '../utils/helpers';
 import { Notifications, Permissions } from 'expo';
+
+import { getDeck } from '../utils/helpers';
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -58,25 +59,34 @@ class Deck extends Component {
 
   render() {
     const { title, questions, position } = this.state.deck;
+    const {
+      addButton,
+      button,
+      centered,
+      container,
+      deckTitle,
+      startButton,
+      subtitle
+    } = styles;
 
     return (
-      <Animated.View style={[styles.container, { left: position }]}>
-        <View style={[{ flex: 1, padding: 40 }, styles.center]}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={[styles.subtitle]}>{`${questions.length} cards`}</Text>
+      <Animated.View style={[container, { left: position }]}>
+        <View style={[{ flex: 1, padding: 40 }, centered]}>
+          <Text style={deckTitle}>{title}</Text>
+          <Text style={[subtitle]}>{`${questions.length} cards`}</Text>
         </View>
-        <View style={[{ flex: 1 }, styles.centered]}>
+        <View style={[{ flex: 1 }, centered]}>
           <TouchableOpacity
-            style={[styles.btn, styles.addBtn]}
+            style={[button, addButton]}
             onPress={() => this.addCard(title)}
           >
-            <Text style={{ textAlign: 'center' }}>Add Card</Text>
+            <Text style={{ textAlign: 'center', fontSize: 20 }}>Add Card</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.btn, styles.startBtn]}
+            style={[button, startButton]}
             onPress={() => this.startQuiz(title)}
           >
-            <Text style={{ color: 'white', textAlign: 'center' }}>
+            <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>
               Start Quiz
             </Text>
           </TouchableOpacity>
@@ -95,28 +105,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  title: {
+  deckTitle: {
     fontSize: 40
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 30,
     color: 'gray',
     marginTop: 10
   },
-  btn: {
+  button: {
     marginBottom: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    paddingLeft: 50,
-    paddingRight: 50,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderWidth: 1,
     borderRadius: 5,
     width: 180
   },
-  addBtn: {
+  addButton: {
     borderColor: 'gray'
   },
-  startBtn: {
+  startButton: {
     backgroundColor: 'black'
   }
 });
