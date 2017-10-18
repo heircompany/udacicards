@@ -12,6 +12,7 @@ function Deck(state = initialState, action) {
         ...state,
         selectedDeck: action.deck
       };
+
     case ADD_CARD:
       return {
         ...state,
@@ -23,6 +24,7 @@ function Deck(state = initialState, action) {
           }
         }
       };
+
     case ADD_DECK:
       return {
         ...state,
@@ -31,11 +33,13 @@ function Deck(state = initialState, action) {
           ...action.deck
         }
       };
+
     case RECEIVE_DECKS:
       return {
         ...state,
         decks: action.decks
       };
+
     default:
       return state;
   }

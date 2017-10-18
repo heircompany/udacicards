@@ -40,7 +40,7 @@ const Tabs = TabNavigator(
         )
       }
     },
-    AddEntry: {
+    NewDeck: {
       screen: NewDeck,
       navigationOptions: {
         tabBarLabel: 'New Deck',
